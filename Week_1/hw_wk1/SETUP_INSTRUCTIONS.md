@@ -2,13 +2,13 @@
 
 This guide will walk you through setting up and running the NYC Green Taxi data ingestion pipeline from scratch.
 
-**NOTE the current setup is not fully Dockerized**
-- Python runs on host machine in a virtual environment managed by uv
-- Connects to PostgreSQL running in Docker
-
-**For a fully Dockerized setup:**
-- Python and PostgreSQL run in Docker containers
-- Everything is isolated from the host machine
+**NOTE** you will have two options at steps 4 & 5 to either run the setup as:
+- **A: Fully Dockerized** 
+  - Python and PostgreSQL run in Docker containers
+  - Everything is isolated from the host machine
+- **B: Not fully Dockerized**
+  - Python runs on host machine in a virtual environment managed by uv
+  - Connects to PostgreSQL running in Docker
 
 ---
 
@@ -30,11 +30,11 @@ Before starting, make sure you have:
 2. Open the folder containing these files (Dockerfile, docker-compose.yaml, hw_ingest_data.py)
 3. Open a new terminal: **Terminal → New Terminal** (or press `` Ctrl+` ``)
 4. Verify you're in the correct directory: 
-5. ```bash
-6. ls
-7. ```
+```bash
+ls
+```
    
-   You should see: `Dockerfile`, `docker-compose.yaml`, `hw_ingest_data.py`
+You should see: `Dockerfile`, `docker-compose.yaml`, `hw_ingest_data.py`
 
 **What this does:** Ensures you're in the right location before running commands.
 
@@ -83,14 +83,14 @@ You should see two containers running: one with `postgres:18` and one with `pgad
 **⚠️ CRITICAL:** You MUST complete this step before Step 5. The database must be running before you can load data into it.
 
 ---
-**At this point you can follow instruction Setup A (Docker) or B (host machine) to carry out the remaining steps**
+## **At this point you can follow instruction Setup A (Docker) or B (host machine) to carry out the remaining steps**
 
 **Benefits of Docker approach (Setup A)**
-✅ No Python installation needed on host machine
-✅ Reproducible everywhere - same image works on any computer with Docker
-✅ Production-ready - this is how it would be deployed
-✅ Isolated - doesn't touch your system Python
-✅ Uses your existing Dockerfile - the one you already have
+- ✅ No Python installation needed on host machine
+- ✅ Reproducible everywhere - same image works on any computer with Docker
+- ✅ Production-ready - this is how it would be deployed
+- ✅ Isolated - doesn't touch your system Python
+- ✅ Uses your existing Dockerfile - the one you already have
 
 ## Setup A: Using Docker
 
@@ -99,7 +99,7 @@ You should see two containers running: one with `postgres:18` and one with `pgad
 Run this command to build your Docker image:
 
 ```bash
-docker build -t taxi-ingest:v001 .
+docker build -t hw-ingest:v001 .
 ```
 
 **What this does:**
@@ -107,7 +107,7 @@ docker build -t taxi-ingest:v001 .
 - Installs Python 3.13 and `uv` package manager
 - Installs all required packages (pandas, sqlalchemy, psycopg2-binary, tqdm, click)
 - Copies your `hw_ingest_data.py` script into the image
-- Tags the image as `taxi-ingest:v001` so you can reference it later
+- Tags the image as `hw-ingest:v001` so you can reference it later
 
 **Expected output (will be similar but not exact):**
 ```
@@ -121,16 +121,16 @@ docker build -t taxi-ingest:v001 .
  => [5/6] RUN uv sync --locked
  => [6/6] COPY hw_ingest_data.py hw_ingest_data.py
  => exporting to image
- => naming to docker.io/library/taxi-ingest:v001
+ => naming to docker.io/library/hw-ingest:v001
 ```
 
 **This will take 1-3 minutes** the first time (downloads Python image and installs packages).
 
 **Verify the image was created:**
 ```bash
-docker images | grep taxi-ingest
+docker images | grep hw-ingest
 ```
-You should see: `taxi-ingest   v001`
+You should see: `hw-ingest   v001`
 
 **⚠️ CRITICAL:** You MUST complete this step before Step 5. The ingestion container needs this image to run.
 
@@ -151,7 +151,7 @@ Now run the ingestion container (replace `hw_wk1_default` with your actual netwo
 ```bash
 docker run -it --rm \
   --network=hw_wk1_default \
-  taxi-ingest:v001 \
+  hw-ingest:v001 \
   --user=root \
   --password=root \
   --host=pgdatabase \
@@ -166,7 +166,7 @@ docker run -it --rm \
 ```
 
 **What this does:**
-- Creates a temporary container from your `taxi-ingest:v001` image
+- Creates a temporary container from your `hw-ingest:v001` image
 - Runs the ingestion script inside the container
 - Downloads NYC Green Taxi data from November 2025 (parquet file, ~47k rows)
 - Downloads NYC Taxi Zone lookup data (CSV file, 265 rows)
@@ -177,7 +177,7 @@ docker run -it --rm \
 
 **What each parameter means:**
 - `--network=hw_wk1_default` - Connects container to same network as PostgreSQL
-- `taxi-ingest:v001` - The Docker image to run
+- `hw-ingest:v001` - The Docker image to run
 - `--user=root` / `--password=root` - Database login credentials
 - `--host=pgdatabase` - PostgreSQL container name (NOT localhost - we're inside Docker!)
 - `--port=5432` - PostgreSQL internal port (NOT 5433 - we're inside Docker network!)
@@ -397,7 +397,7 @@ Confirm everything worked:
 
 - [ ] Docker Desktop is running
 - [ ] Two containers are running (`docker ps` shows pgdatabase and pgadmin)
-- [ ] (Setup A) Docker image built successfully (`docker images | grep taxi-ingest`)
+- [ ] (Setup A) Docker image built successfully (`docker images | grep hw-ingest`)
 - [ ] Python script completed without errors
 - [ ] pgAdmin opens at http://localhost:8085
 - [ ] Database connection successful in pgAdmin
@@ -429,7 +429,7 @@ Confirm everything worked:
 
 ---
 
-## 🔁 Running Again (After Initial Setup B)
+## 🔁 Running Again (After Initial Setup A)
 
 If you need to re-run the ingestion (e.g., to reload data):
 
@@ -440,7 +440,7 @@ docker compose up -d
 # Run ingestion again (image already built, so skip that step)
 docker run -it \
   --network=hw_wk1_default \
-  taxi-ingest:v001 \
+  hw-ingest:v001 \
   --user=root \
   --password=root \
   --host=pgdatabase \
@@ -473,7 +473,7 @@ When you're done working (Both Setups A & B):
 
 **Important:** Using `-v` flag deletes your database data permanently!
 
-## 🧹 Cleanup (Remove Everything) (Setup B)
+## 🧹 Cleanup (Remove Everything) (Setup A)
 
 To completely clean up (remove containers, images, volumes):
 
@@ -482,7 +482,7 @@ To completely clean up (remove containers, images, volumes):
 docker compose down -v
 
 # Remove the ingestion image
-docker rmi taxi-ingest:v001
+docker rmi hw-ingest:v001
 
 # Verify everything is gone
 docker ps -a
@@ -536,12 +536,12 @@ sleep 15
 # Then try the ingestion again
 ```
 
-### Error: "image not found: taxi-ingest:v001"
+### Error: "image not found: hw-ingest:v001"
 
 **Solution:** You didn't build the image.
 
 ```bash
-docker build -t taxi-ingest:v001 .
+docker build -t hw-ingest:v001 .
 ```
 
 ### Error: "SSL certificate verify failed"
