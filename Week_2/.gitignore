@@ -1,0 +1,9 @@
+# Ignore all files in the keys directory.
+keys/*
+*.json
+*.env
+*.env_encoded 
+
+# Ignore all DS Store files
+.DS_Store
+**/.DS_Store

@@ -1,3 +1,10 @@
+# Ignore all DS Store files
+.DS_Store
+**/.DS_Store
+
+# Ignore all files in the keys directory.
+keys/*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
