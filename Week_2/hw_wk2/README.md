@@ -10,7 +10,9 @@ Instead, when you go to the Execution > go to "Metrics" and find the "upload_to_
 
 - Answer: 134.5 MB (134,481,400)
 
-## Q2: Green_2020-04
+Note: Alternative method is to remove PurgeCurrentExecutionFiles at the end of the flow. When you purge them, you can't preview or see their file size in the "Outputs" tab of Kestra.
+
+## Q2: Green -- 2020-04
 - Answer: green_tripdata_2020-04.csv
 
 ## Q3: Yellow -- all 2020 (count of rows)
