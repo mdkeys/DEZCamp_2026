@@ -12,6 +12,7 @@ ENV PATH="/app/.venv/bin:$PATH"
 
 # Copy dependency files first (better caching)
 COPY "pyproject.toml" "uv.lock" ".python-version" ./
+
 # Install all dependencies (pandas, sqlalchemy, psycopg2)
 RUN uv sync --locked
 

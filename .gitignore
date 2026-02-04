@@ -4,6 +4,8 @@
 
 # Ignore all files in the keys directory.
 keys/*
+gcs.json
+service-account.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
