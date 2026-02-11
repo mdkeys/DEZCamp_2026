@@ -1,7 +1,9 @@
 ## Module 2 homework
 https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/cohorts/2026/02-workflow-orchestration/homework.md
 
-**Note:** I used the 09_gcp_taxi_scheduled.yaml under Week_2/flows with the docker-compose.yaml under Week_2. I did not make copies in this homework folder, but you can go up a level to see those files.
+**Note:** 
+- I used the 09_gcp_taxi_scheduled.yaml under Week_2/flows with the docker-compose.yaml under Week_2. I did not make copies in this homework folder, but you can go up a level to see those files.
+- **If you want to spin up Kestra again & load data into BQ** Remember to run flow "06_gcp_kv.yaml" to add your key values before you execute a new flow to load data into your BQ bucket. 
 
 ## Q1: Yellow_2020-12 (uncompressed file size of the extract task)
 I used the 09_gcp_taxi_scheduled.yaml file and ran a backfill for 2020-12-01. Then I checked BigQuery for the datasize of file yellow_tripdata_2020-12.csv (go to Details tab). But that shows the size (334.43 MB).
