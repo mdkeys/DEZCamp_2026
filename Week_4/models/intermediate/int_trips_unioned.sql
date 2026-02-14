@@ -13,3 +13,4 @@ trips_unioned as (
 	)
 
 select * from trips_unioned 
+
