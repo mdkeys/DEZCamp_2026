@@ -4,6 +4,7 @@ WITH cte_trips_unioned AS (
 ),
 
 -- Create trip_id based on MD5 hash. This will create the same trip_id for duplicate rows.
+-- Note: We can actually use dbt_utils to create the unique has instead. 
 
 cte_trip_id AS (
     SELECT 

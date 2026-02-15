@@ -1,9 +1,15 @@
+-- Initial union of raw green and yellow tripdata from staging
+
 with green_tripdata as (
-    select * from {{ ref('stg_green_tripdata') }}
+    select *,
+        'Green' as service_type
+    from {{ ref('stg_green_tripdata') }}
 	),
     
 yellow_tripdata as (
-	select * from {{ ref('stg_yellow_tripdata') }}
+	select *,
+        'Yellow' as service_type
+    from {{ ref('stg_yellow_tripdata') }}
 	),
 
 trips_unioned as (
