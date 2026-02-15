@@ -6,6 +6,7 @@ CASE
     WHEN {{payment_type}} = 3 then 'No charge'
     WHEN {{payment_type}} = 4 then 'Dispute'
     WHEN {{payment_type}} = 5 then 'Unknown'
-    WHEN {{payment_type}} = 6 then 'Voided trip'            
+    WHEN {{payment_type}} = 6 then 'Voided trip'   
+    ELSE 'Unknown_Other' -- Allows any unexpected values to be coded as Unknown_Other        
 END
 {%- endmacro %}

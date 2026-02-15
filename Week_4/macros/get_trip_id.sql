@@ -1,3 +1,7 @@
+{#  
+    Creates the trip_id using EVERY variable to ensure duplicate trip_ids are truly the same trip and not very similar factors. 
+#}
+
 {% macro get_trip_id(vendor_id,rate_code_id,pickup_location_id,
                     dropoff_location_id,pickup_datetime,dropoff_datetime,
                     store_and_fwd_flag,passenger_count,trip_type,trip_distance,
