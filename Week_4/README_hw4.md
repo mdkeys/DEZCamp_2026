@@ -37,12 +37,12 @@ SELECT
   service_type,
   revenue_month,
   SUM(total_monthly_trips) as sum_of_trips
-FROM `kestra-sandbox-485519.dbt_mdavies.fct_monthly_zone_revenue`
+FROM `kestra-sandbox-485519.dezc_mod4.fct_monthly_zone_revenue`
 WHERE service_type = 'Green'
   AND revenue_month = '2019-10-01'
 GROUP BY revenue_month, service_type
 ```
-- Green	2019-10-01: 384,624
+- Green	2019-10-01: 384,624 (I get the same answer when using dbt_mdavies)
 
 ## 6. Build a staging model for FHV Data 
 - Used Kestra to load fhv 2019 files 
