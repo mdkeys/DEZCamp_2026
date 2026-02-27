@@ -67,8 +67,8 @@ SELECT
   MAX(trip_dropoff_date_time) as end
 FROM "rides"
 ```
-#2:
-``` 0.2666
+#2: 0.2666
+``` 
 SELECT
 SUM(case when payment_type = 'Credit' then 1 else 0 end) / count(*)
 FROM "rides"
