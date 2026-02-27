@@ -3,6 +3,7 @@
 **/.DS_Store
 
 # Ignore all files in the keys directory.
+keys/
 keys/*
 gcs.json
 service-account.json
