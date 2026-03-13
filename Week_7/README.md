@@ -150,3 +150,9 @@ Output:
 +---------------------+-------------------+
 
 Count of table rows: 657
+
+## Clean up
+1. Remove all containers: `docker compose down`
+2. Remove PostgresSQL data volume: `docker compose down -v`
+3. Check if anything is still running: `docker ps`
+4. Check all stopped containers: `docker ps -a`
