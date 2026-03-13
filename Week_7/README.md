@@ -77,6 +77,7 @@ Answer: 8506
     ```
 
 Answer: 74
+
 Output: 
 ```
 +--------------+-----------+
@@ -111,6 +112,7 @@ Count of rows: 23312
     ```
 
 Answer: 81
+
 Output: 
 ```
 +---------------------+---------------------+--------------+-----------+
@@ -140,6 +142,7 @@ Note: The count of rows in the table are the number of session windows.
 3. Submit the Flink job: `docker exec -it week_7-jobmanager-1 flink run -py /opt/src/job/trips_tip_per_hour.py`
 
 Answer: 2025-10-16 18:00:00
+
 Output: 
 ```
 +---------------------+-------------------+
